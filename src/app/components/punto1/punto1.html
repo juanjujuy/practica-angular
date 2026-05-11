@@ -1,0 +1,32 @@
+<div class="container card">
+
+  <div class="position-relative slide-container m-3">
+    <!-- Imagen -->
+    <img [src]="eventos[puntero].img" class="img-slide" alt="Evento">
+
+    <!-- Overlay oscuro -->
+    <div class="overlay d-flex flex-column justify-content-end p-3">
+
+      <h5 class="fw-bold mb-1 fs-6 fs-sm-5">
+        {{eventos[puntero].nombre}}
+      </h5>
+
+      <p class="mb-0 small fs-8 fs-sm-6">
+        {{eventos[puntero].descripcion}}
+      </p>
+
+    </div>
+
+    <!-- Flechas -->
+    <button class="btn btn-dark rounded-circle position-absolute top-50 start-0 translate-middle-y ms-2 opacity-75"
+      (click)="anteriorEvento()">
+      &#10094;
+    </button>
+
+    <button class="btn btn-dark rounded-circle position-absolute top-50 end-0 translate-middle-y me-2 opacity-75"
+      (click)="siguienteEvento()">
+      &#10095;
+    </button>
+  </div>
+
+</div>

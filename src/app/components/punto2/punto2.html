@@ -1,0 +1,131 @@
+<div class="container mt-5">
+
+    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalCarrito">
+        🛒 Ver Carrito
+    </button>
+
+    <!-- Título -->
+
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-uppercase text-primary">
+            Productos Destacados
+        </h2>
+        <p class="text-muted">
+            Explorá nuestra selección de productos informáticos
+        </p>
+        <hr class="w-25 mx-auto border-primary border-3">
+    </div>
+
+    <!-- Grilla de productos -->
+
+    <div class="row">
+
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" *ngFor="let producto of productos">
+
+            <div class="card h-100 shadow-sm">
+
+                <!-- Imagen -->
+                <img [src]="producto.img" class="card-img-top img-producto" alt="Producto">
+
+                <!-- Contenido -->
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title fw-bold">
+                        {{producto.nombre}}
+                    </h5>
+
+                    <p class="card-text text-muted flex-grow-1 d-none d-sm-block">
+                        {{producto.descripcion}}
+                    </p>
+
+                    <!-- Precio -->
+                    <div class="container row">
+                        <h6 class="text-primary fw-bold mt-2">
+                            {{producto.precio | currency :'U$D' : 'symbol' : '1.2-2'}}
+                        </h6>
+                        <button class="btn" (click)="agregarCarrito(producto)"
+                            [ngClass]="producto.carrito ? 'btn-danger' : 'btn-primary'">
+                            {{producto.carrito ? 'Quitar del Carrito' : 'Agregar al Carrito'}}
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modalCarrito" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Carrito de Compras</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <!-- Si no hay productos -->
+                <p *ngIf="carrito.length === 0" class="text-muted">
+                    El carrito está vacío
+                </p>
+
+                <!-- Lista de productos -->
+                <ul class="list-group" *ngIf="carrito.length > 0">
+                    <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-center"
+                        *ngFor="let producto of carrito">
+
+                        <div class="d-flex align-items-center w-100 mb-2 mb-md-0">
+                            <img [src]="producto.img" class="img-mini me-2" alt="producto">
+
+                            <span class="fw-bold">
+                                {{producto.nombre}}
+                            </span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center w-100">
+
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-sm btn-outline-secondary"
+                                    (click)="disminuir(producto)">−</button>
+
+                                <span class="fw-bold">{{producto.cantidad}}</span>
+
+                                <button class="btn btn-sm btn-outline-secondary" (click)="aumentar(producto)">+</button>
+                            </div>
+
+                            <span class="badge bg-primary">
+                                {{producto.subtotal | currency:'ARS':'symbol':'1.2-2'}}
+                            </span>
+
+                        </div>
+
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer d-flex justify-content-between">
+
+                <h6 class="fw-bold">
+                    Total: {{calcularTotal() | currency:'U$D ':'symbol':'1.2-2'}}
+                </h6>
+
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

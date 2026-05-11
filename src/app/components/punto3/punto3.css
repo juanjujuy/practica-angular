@@ -1,0 +1,53 @@
+.carta {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 0;
+  height: 100%;
+}
+
+.img-carta {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.deshabilitado {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.tableroActivo {
+    background-color: #e3f2fd
+}
+
+.tableroInactivo {
+    background-color: #eeeeee
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.board-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    transform: rotateY(180deg);
+}

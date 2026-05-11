@@ -1,0 +1,27 @@
+.img-slide {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slide-container {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+
+/* capa oscura */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  color: white;
+
+  /* fondo oscuro degradado */
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+}
+
