@@ -1,17 +1,20 @@
 export class Inscripcion {
-    dni: number;
-    precio: number;
-    categoriaAlumno: CategoriaAlumno;
-    fechaIncripcion: Date;
+    id: number | null;
+    dni: number | null;
+    precio: number | null;
+    categoriaAlumno: CategoriaAlumno | null;
+    fechaInscripcion: Date | null;
     email: string;
-    curso: Cursos;
-    pagoTotal: number;
+    curso: Cursos | null;
+    pagoTotal: number | null;
 
-    constructor (dni: number, precio: number, categoriaAlumno: CategoriaAlumno, fechaInscripcion: Date, email: string, curso: Cursos, pagoTotal: number) {
+    constructor(id: number, dni: number, precio: number, categoriaAlumno: CategoriaAlumno, 
+        fechaInscripcion: Date, email: string, curso: Cursos, pagoTotal: number) {
+        this.id = id;
         this.dni = dni;
         this.precio = precio;
         this.categoriaAlumno = categoriaAlumno;
-        this.fechaIncripcion = fechaInscripcion;
+        this.fechaInscripcion = fechaInscripcion;
         this.email = email;
         this.curso = curso;
         this.pagoTotal = pagoTotal;
