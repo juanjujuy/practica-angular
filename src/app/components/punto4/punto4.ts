@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoriaAlumno, Cursos, Inscripcion } from '../../models/punto4/inscripcion';
 import { Inscripcion as InscripcionService } from '../../services/punto4/inscripcion';
@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 })
 export class Punto4 implements OnInit {
 
+  @ViewChild('formInscripcion') formInscripcion: any;
+
+  formEnviado = false;
   CategoriaAlumno = CategoriaAlumno;
 
   categorias = Object.keys(CategoriaAlumno)
@@ -52,9 +55,20 @@ export class Punto4 implements OnInit {
   }
 
   agregarIncripcion() {
+    this.formEnviado = true;
+
+    if (this.formInscripcion.invalid) {
+      return;
+    }
     this.formularioInscripcion.fechaInscripcion = new Date()
     this.inscripcionService.addInscripcion(this.formularioInscripcion);
     this.formularioInscripcion = this.getInscripcionVacia();
+
+    // reset estado del submit
+    this.formEnviado = false;
+
+    //resetear validaciones del form Angular
+    this.formInscripcion.resetForm();
   }
 
   eliminarInscripcion(inscripcion: Inscripcion) {

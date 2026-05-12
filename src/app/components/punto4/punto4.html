@@ -8,25 +8,25 @@
                 <input type="text" id="dni" name="dni" placeholder="Ej. 40321654" class="form-control" required
                     minlength="7" maxlength="8" pattern="^[0-9]+$" #dni="ngModel"
                     [(ngModel)]="formularioInscripcion.dni">
-                @if (dni.touched && dni.errors?.['required']) {
+                @if ((formEnviado || dni.touched) && dni.errors?.['required']) {
                 <small class="text-danger">
                     El DNI es obligatorio
                 </small>
                 }
 
-                @if (dni.touched && dni.errors?.['minlength']) {
+                @if ((formEnviado || dni.touched) && dni.errors?.['minlength']) {
                 <small class="text-danger">
                     El DNI debe tener al menos 7 dígitos
                 </small>
                 }
 
-                @if (dni.touched && dni.errors?.['maxlength']) {
+                @if ((formEnviado || dni.touched) && dni.errors?.['maxlength']) {
                 <small class="text-danger">
                     El DNI no puede superar 8 dígitos
                 </small>
                 }
 
-                @if (dni.touched && dni.errors?.['pattern']) {
+                @if ((formEnviado || dni.touched) && dni.errors?.['pattern']) {
                 <small class="text-danger">
                     El DNI solo puede contener números
                 </small>
@@ -43,7 +43,7 @@
                     <option [ngValue]="CategoriaAlumno[cat]">{{cat.charAt(0).toUpperCase() + cat.slice(1) }}</option>
                     }
                 </select>
-                @if (categoria.touched && categoria.errors?.['required']) {
+                @if ((formEnviado || categoria.touched) && categoria.errors?.['required']) {
                 <small class="text-danger">
                     Debe seleccionar una categoría
                 </small>
@@ -59,7 +59,7 @@
                     <option [ngValue]="Cursos[cur]">{{cur.charAt(0).toUpperCase() + cur.slice(1) }}</option>
                     }
                 </select>
-                @if (curso.touched && curso.errors?.['required']) {
+                @if ((formEnviado || curso.touched) && curso.errors?.['required']) {
                 <small class="text-danger">
                     Debe seleccionar un curso
                 </small>
@@ -71,10 +71,10 @@
                 <input type="number" id="precio" name="precio" #precio="ngModel" min="0" placeholder="Ej. 700,45"
                     class="form-control" required [(ngModel)]="formularioInscripcion.precio"
                     (ngModelChange)="calcularPago()">
-                @if (precio.touched && precio.errors?.['min']) {
+                @if ((formEnviado || precio.touched) && precio.errors?.['min']) {
                 <small class="text-danger">El precio no puede ser negativo</small>
                 }
-                @if (precio.touched && precio.errors?.['required']) {
+                @if ((formEnviado || precio.touched) && precio.errors?.['required']) {
                 <small class="text-danger">El precio es obligatorio</small>
                 }
             </div>
@@ -84,7 +84,7 @@
                 <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@email.com"
                 #email="ngModel" required
                 [(ngModel)]="formularioInscripcion.email">
-                @if (email.touched && email.errors?.['required']) {
+                @if ((formEnviado || email.touched) && email.errors?.['required']) {
                 <small class="text-danger">Debe ingresar un correo electrónico</small>
                 }
             </div>
