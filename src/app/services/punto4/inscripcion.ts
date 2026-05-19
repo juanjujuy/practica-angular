@@ -61,6 +61,8 @@ export class Inscripcion {
 
   addInscripcion(inscripcion: inscripcion) {
     inscripcion.id = this.getIdDisponible();
+    inscripcion.fechaInscripcion = new Date();
+
     this.inscripciones.push(inscripcion);
   }
 
@@ -95,6 +97,27 @@ export class Inscripcion {
       }
     })
     return maxId + 1;
+  }
+
+  calcularPago(inscripcion: inscripcion): number {
+    let total : number = 0;
+    if (
+      inscripcion.precio !== null &&
+      inscripcion.categoriaAlumno !== null) {
+      if (inscripcion.categoriaAlumno === CategoriaAlumno.estudiante) {
+        total = inscripcion.precio * 0.65;
+      }
+      if (inscripcion.categoriaAlumno === CategoriaAlumno.egresado) {
+        total = inscripcion.precio * 0.5;
+      }
+      if (inscripcion.categoriaAlumno === CategoriaAlumno.particular) {
+        total = inscripcion.precio;
+      }
+    }
+    else {
+      total = 0;
+    }
+    return total;
   }
 
 

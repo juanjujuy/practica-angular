@@ -10,14 +10,32 @@
 
     <!-- Contenido colapsable -->
     <div class="collapse navbar-collapse" id="menuNav">
-      <div class="ms-auto d-flex flex-column flex-md-row gap-2 mt-3 mt-md-0">
+      <div class="mt-3 mt-md-0">
+        <div class="d-flex flex-column flex-md-row gap-2">
+          <button class="btn btn-outline-light" routerLink="">Home</button>
+          <button class="btn btn-outline-light" routerLink="/punto1">Punto 1</button>
+          <button class="btn btn-outline-light" routerLink="/punto2">Punto 2</button>
+          <button class="btn btn-outline-light" routerLink="/punto3">Punto 3</button>
+          <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Punto 4
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" routerLink="/punto4">Inscripciones</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/form/0">Agregar Inscripcion</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/filtro-inscripcion">Resumen Inscripciones</a>
+              </li>
+            </ul>
+          </div>
 
-        <button class="btn btn-outline-light" routerLink="">Home</button>
-        <button class="btn btn-outline-light" routerLink="/punto1">Punto 1</button>
-        <button class="btn btn-outline-light" routerLink="/punto2">Punto 2</button>
-        <button class="btn btn-outline-light" routerLink="/punto3">Punto 3</button>
-        <button class="btn btn-outline-light" routerLink="/punto4">Punto 4</button>
 
+        </div>
       </div>
     </div>
 

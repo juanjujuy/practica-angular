@@ -3,11 +3,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoriaAlumno, Cursos, Inscripcion } from '../../models/punto4/inscripcion';
 import { Inscripcion as InscripcionService } from '../../services/punto4/inscripcion';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-punto4',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './punto4.html',
   styleUrl: './punto4.css',
 })
@@ -30,7 +30,6 @@ export class Punto4 implements OnInit {
   constructor(private inscripcionService: InscripcionService, private router: Router) {
     this.inscripciones = new Array<Inscripcion>();
 
-    this.inscripciones = this.inscripcionService.getInscripciones();
   }
 
   filtroCategoria: CategoriaAlumno | null = null;
@@ -51,6 +50,7 @@ export class Punto4 implements OnInit {
   }
 
   ngOnInit(): void {
+    this.inscripciones = this.inscripcionService.getInscripciones();
 
   }
 
@@ -60,7 +60,7 @@ export class Punto4 implements OnInit {
     if (this.formInscripcion.invalid) {
       return;
     }
-    this.formularioInscripcion.fechaInscripcion = new Date()
+    
     this.inscripcionService.addInscripcion(this.formularioInscripcion);
     this.formularioInscripcion = this.getInscripcionVacia();
 
@@ -84,25 +84,10 @@ export class Punto4 implements OnInit {
   }
 
   calcularPago() {
-    if (
-      this.formularioInscripcion.precio !== null &&
-      this.formularioInscripcion.categoriaAlumno !== null) {
-      if (this.formularioInscripcion.categoriaAlumno === CategoriaAlumno.estudiante) {
-        this.formularioInscripcion.pagoTotal = this.formularioInscripcion.precio * 0.65;
-      }
-      if (this.formularioInscripcion.categoriaAlumno === CategoriaAlumno.egresado) {
-        this.formularioInscripcion.pagoTotal = this.formularioInscripcion.precio * 0.5;
-      }
-      if (this.formularioInscripcion.categoriaAlumno === CategoriaAlumno.particular) {
-        this.formularioInscripcion.pagoTotal = this.formularioInscripcion.precio;
-      }
-    }
-    else {
-      this.formularioInscripcion.pagoTotal = 0;
-    }
+    this.formularioInscripcion.pagoTotal = this.inscripcionService.calcularPago(this.formularioInscripcion);
   }
 
-  get getResumen() {
+  getResumen() {
     return {
       Estudiante: this.inscripciones.filter((e) => Number(e.categoriaAlumno) === 1).length,
       Egresado: this.inscripciones.filter((e) => Number(e.categoriaAlumno) === 2).length,

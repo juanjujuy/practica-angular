@@ -1,0 +1,104 @@
+<div class="container">
+
+    <section class="bg-body-secundary p-4">
+        <h1>Formulario de Inscripción a Cursos</h1>
+
+        <form #formInscripcion="ngForm" (ngSubmit)="agregarInscripcion()">
+            <div class="form-group">
+                <label class="form-label" for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" placeholder="Ej. 40321654" class="form-control" required
+                    minlength="7" maxlength="8" pattern="^[0-9]+$" #dni="ngModel"
+                    [(ngModel)]="formularioInscripcion.dni">
+                @if ((formEnviado || dni.touched) && dni.errors?.['required']) {
+                <small class="text-danger">
+                    El DNI es obligatorio
+                </small>
+                }
+
+                @if ((formEnviado || dni.touched) && dni.errors?.['minlength']) {
+                <small class="text-danger">
+                    El DNI debe tener al menos 7 dígitos
+                </small>
+                }
+
+                @if ((formEnviado || dni.touched) && dni.errors?.['maxlength']) {
+                <small class="text-danger">
+                    El DNI no puede superar 8 dígitos
+                </small>
+                }
+
+                @if ((formEnviado || dni.touched) && dni.errors?.['pattern']) {
+                <small class="text-danger">
+                    El DNI solo puede contener números
+                </small>
+                }
+
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="categoria">Categoría del Alumno:</label>
+                <select id="categoria" name="categoria" class="form-control" required #categoria="ngModel"
+                    [(ngModel)]="formularioInscripcion.categoriaAlumno" (ngModelChange)="calcularPago()">
+                    <option [ngValue]="null" disabled>Seleccione una categoría</option>
+                    @for (cat of categorias; track cat) {
+                    <option [ngValue]="CategoriaAlumno[cat]">{{cat.charAt(0).toUpperCase() + cat.slice(1) }}</option>
+                    }
+                </select>
+                @if ((formEnviado || categoria.touched) && categoria.errors?.['required']) {
+                <small class="text-danger">
+                    Debe seleccionar una categoría
+                </small>
+                }
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="curso">Curso:</label>
+                <select id="curso" name="curso" class="form-control" required [(ngModel)]="formularioInscripcion.curso"
+                    #curso="ngModel">
+                    <option [ngValue]="null" disabled>Seleccione un curso</option>
+                    @for (cur of cursos; track cur) {
+                    <option [ngValue]="Cursos[cur]">{{cur.charAt(0).toUpperCase() + cur.slice(1) }}</option>
+                    }
+                </select>
+                @if ((formEnviado || curso.touched) && curso.errors?.['required']) {
+                <small class="text-danger">
+                    Debe seleccionar un curso
+                </small>
+                }
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" #precio="ngModel" min="0" placeholder="Ej. 700,45"
+                    class="form-control" required [(ngModel)]="formularioInscripcion.precio"
+                    (ngModelChange)="calcularPago()">
+                @if ((formEnviado || precio.touched) && precio.errors?.['min']) {
+                <small class="text-danger">El precio no puede ser negativo</small>
+                }
+                @if ((formEnviado || precio.touched) && precio.errors?.['required']) {
+                <small class="text-danger">El precio es obligatorio</small>
+                }
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@email.com"
+                    #email="ngModel" required [(ngModel)]="formularioInscripcion.email">
+                @if ((formEnviado || email.touched) && email.errors?.['required']) {
+                <small class="text-danger">Debe ingresar un correo electrónico</small>
+                }
+            </div>
+
+            <div class="form-group">
+                @if (formularioInscripcion.precio != null && formularioInscripcion.categoriaAlumno != null
+                && formularioInscripcion.precio >= 0) {
+                <label class="form-label text-primary mt-3 fw-bold" for="pagoTotal">Total a Pagar:</label>
+                <p class="text-primary fw-bold">{{formularioInscripcion.pagoTotal | currency:'ARS '}}</p>
+                }
+            </div>
+
+            <button type="submit" [disabled]="!formInscripcion.valid" class="btn btn-primary m-3">Inscribir</button>
+
+        </form>
+    </section>
+</div>
